@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycling_app/pages/home.dart';
+import 'package:recycling_app/pages/products_page.dart';
 import 'package:recycling_app/pages/scan.dart';
 import 'package:recycling_app/pages/leaderboard_page.dart';
 import 'package:recycling_app/pages/user_profile_page.dart';
@@ -18,7 +19,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     HomePage(),
     ScanPage(),
     LeaderboardPage(),
-    UserProfilePage(), // Profile of logged-in user
+    UserProfilePage(),
+    ProductsPage(),
   ];
 
   @override
@@ -40,6 +42,7 @@ class _MainScaffoldState extends State<MainScaffold> {
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: "Scan"),
           BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: "Leaderboard"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Products"),
         ],
       ),
     );

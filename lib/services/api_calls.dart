@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:recycling_app/models/leaderboard.dart';
+import 'package:recycling_app/models/product.dart';
 import 'package:recycling_app/models/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -127,6 +128,18 @@ class ApiCalls {
       return Leaderboard.fromJson(data);
     } else {
       throw Exception("Failed to load leaderboard");
+    }
+  }
+
+  static Future<List<Product>> getProducts() async {
+    final response = await HttpService.get("products");
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return (data["products"] as List)
+          .map((item) => Product.fromJson(item))
+          .toList();
+    } else {
+      throw Exception("Failed to load products");
     }
   }
 }
