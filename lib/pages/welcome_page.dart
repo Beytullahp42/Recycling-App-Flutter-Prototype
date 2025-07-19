@@ -55,7 +55,7 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.signUp);
+                        Navigator.pushNamed(context, AppRoutes.register);
                       },
                       child: const Text(
                         'Get Started',

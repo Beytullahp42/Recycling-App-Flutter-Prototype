@@ -76,6 +76,17 @@ class UserProfilePage extends StatelessWidget {
                 Text("Joined: ${profile.createdAt.toLocal().toString().split(' ').first}"),
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.transactions);
+                  },
+                  icon: const Icon(Icons.history),
+                  label: const Text("Transaction History"),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  )
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton.icon(
                   onPressed: () => _logout(context),
                   icon: const Icon(Icons.logout),
                   label: const Text("Log Out"),

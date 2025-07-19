@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recycling_app/routes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:recycling_app/services/api_calls.dart';
 
 import 'components/AppColors.dart';
 
@@ -28,13 +28,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _loadInitialRoute() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final isValid = await ApiCalls.isLoggedIn();
+
     setState(() {
-      initialRoute =
-          (token != null && token.isNotEmpty)
-              ? AppRoutes.home
-              : AppRoutes.welcome;
+      initialRoute = isValid ? AppRoutes.home : AppRoutes.welcome;
     });
   }
 
@@ -46,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Recycling App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.darkGreen,

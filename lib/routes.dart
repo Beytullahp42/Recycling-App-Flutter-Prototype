@@ -7,11 +7,12 @@ import 'package:recycling_app/pages/profile_page.dart';
 import 'package:recycling_app/pages/register.dart';
 import 'package:recycling_app/pages/scan.dart';
 import 'package:recycling_app/pages/scan_process.dart';
+import 'package:recycling_app/pages/transactions_page.dart';
 import 'package:recycling_app/pages/user_profile_page.dart';
 import 'package:recycling_app/pages/welcome_page.dart';
 
 class AppRoutes {
-  static const String signUp = "/signup";
+  static const String register = "/register";
   static const String login = "/login";
   static const String home = "/home";
   static const String userProfile = "/userProfile";
@@ -21,9 +22,10 @@ class AppRoutes {
   static const String scanProcess = "/scanProcess";
   static const String leaderboard = "/leaderboard";
   static const String profile = "/profile";
+  static const String transactions = "/transactions";
 
   static Map<String, WidgetBuilder> routes = {
-    signUp: (context) => const RegisterPage(),
+    register: (context) => const RegisterPage(),
     login: (context) => const LoginPage(),
     home: (context) => const MainScaffold(),
     userProfile: (context) => const UserProfilePage(),
@@ -38,6 +40,7 @@ class AppRoutes {
     profile: (context) {
       final args = ModalRoute.of(context)!.settings.arguments as String;
       return ProfilePage(username: args);
-    }
+    },
+    transactions: (context) => const TransactionsPage(),
   };
 }

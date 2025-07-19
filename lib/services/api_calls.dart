@@ -5,24 +5,30 @@ import 'package:recycling_app/models/product.dart';
 import 'package:recycling_app/models/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/transactions.dart';
 import '../models/user.dart';
 import '../models/user_profile.dart';
 import 'http_service.dart';
 
 class ApiCalls {
+
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    if (token == null) {
-      return false;
-    }
+
+    if (token == null || token.isEmpty) return false;
+
     final response = await HttpService.get("user");
+
     if (response.statusCode == 200) {
       return true;
     } else {
+      await prefs.remove('token');
       return false;
     }
   }
+
+
 
   static Future<bool> login(String email, String password) async {
     final body = {"email": email, "password": password};
@@ -142,4 +148,41 @@ class ApiCalls {
       throw Exception("Failed to load products");
     }
   }
+
+  static Future<Map<String, dynamic>> redeemProduct(int productId) async {
+    final response = await HttpService.post("redeem", {"product_id": productId});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      return {
+        'success': true,
+        'message': data['message'] as String,
+      };
+    } else {
+      String errorMessage = "Purchase failed";
+      try {
+        final data = jsonDecode(response.body);
+        if (data['message'] != null) {
+          errorMessage = data['message'];
+        }
+      } catch (_) {}
+      return {
+        'success': false,
+        'message': errorMessage,
+      };
+    }
+  }
+
+  static Future<List<TransactionModel>> getTransactions() async {
+    final response = await HttpService.get("transactions");
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return (data["transactions"] as List)
+          .map((item) => TransactionModel.fromJson(item))
+          .toList();
+    } else {
+      throw Exception("Failed to load transactions");
+    }
+  }
+
 }

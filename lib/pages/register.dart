@@ -18,6 +18,8 @@ class _RegisterPageState extends State<RegisterPage> with RouteAware {
   final _confirmPasswordController = TextEditingController();
 
   bool _isLoading = false;
+  bool firstObscure = true;
+  bool secondObscure = true;
   String? _error;
 
   Future<void> _handleRegister() async {
@@ -92,21 +94,38 @@ class _RegisterPageState extends State<RegisterPage> with RouteAware {
                 const SizedBox(height: 10),
                 TextField(
                   controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: firstObscure,
+                  decoration: InputDecoration(
                     labelText: "Password",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(firstObscure ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(() {
+                          firstObscure = !firstObscure;
+                        });
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextField(
                   controller: _confirmPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: secondObscure,
+                  decoration: InputDecoration(
                     labelText: "Confirm Password",
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(secondObscure ? Icons.visibility_off : Icons.visibility),
+                      onPressed: () {
+                        setState(() {
+                          secondObscure = !secondObscure;
+                        });
+                      },
+                    ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
                 _isLoading
                     ? const CircularProgressIndicator()

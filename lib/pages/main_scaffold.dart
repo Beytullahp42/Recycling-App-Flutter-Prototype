@@ -19,8 +19,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     HomePage(),
     ScanPage(),
     LeaderboardPage(),
-    UserProfilePage(),
     ProductsPage(),
+    UserProfilePage(),
   ];
 
   @override
@@ -41,8 +41,8 @@ class _MainScaffoldState extends State<MainScaffold> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.qr_code), label: "Scan"),
           BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: "Leaderboard"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Products"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

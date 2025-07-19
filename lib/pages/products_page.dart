@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recycling_app/pages/purchase_page.dart';
 import '../components/product_tile.dart';
 import '../models/product.dart';
 import '../models/user_profile.dart';
@@ -72,23 +73,36 @@ class _ProductsPageState extends State<ProductsPage> {
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.all(8),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.49, // specific ratio...
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.49, // specific ratio...
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                        ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
                       final canAfford = balance >= product.price;
                       return ProductTile(
-                        product: product,
-                        canAfford: canAfford,
+                        product: products[index],
+                        onTap:
+                            () => showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder:
+                                  (context) => PurchaseSheet(
+                                    product: products[index],
+                                    canAfford: canAfford,
+                                    onPurchase: () {
+                                      setState(() {
+                                        _futureData = _loadData();
+                                      });
+                                    },
+                                  ),
+                            ),
                       );
                     },
-
-
                   ),
                 ),
               ],
